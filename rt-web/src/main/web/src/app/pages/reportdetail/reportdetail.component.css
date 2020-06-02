@@ -1,0 +1,42 @@
+.mat-header-cell, .mat-sort-header {
+  background-color: #006891;
+  color: white;
+}
+
+.btn-color {
+  background-color: #006891;
+  border-color: #006891;
+}
+/* .col-1 > .mat-form-field {
+  width: 90px;
+  margin-left: 15px;
+} */
+
+.form-field-w100 {
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+.table-header {
+  font-weight: 700;
+  color: #006891;
+}
+
+.eco-color {
+  color: #006891;
+}
+
+.success-color {
+  color: #1cff1f;
+}
+
+.pending-color {
+  color: #d1d40e;
+}
+
+.failed-color {
+  color: #ff2100;
+}

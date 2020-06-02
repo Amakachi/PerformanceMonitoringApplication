@@ -1,0 +1,89 @@
+.form-w100 {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .form-field-w100 {
+    width: 100%;
+  }
+
+  .table-container {
+    min-height: 200px;
+    margin: 18px;
+    overflow: auto;
+    width: 100%;
+  }
+
+  table {
+    text-align: center;
+    table-layout: fixed;
+        width: 1750px;
+    min-width: 1000px;
+    overflow-x: scroll;
+  }
+
+  th, td {
+    text-align: inherit;
+    min-width: 100px;
+  }
+
+
+  tr{
+    text-align: center;
+    }
+
+/* .m-20{
+  margin-right: 10px;
+} */
+
+.mat-header-cell, .mat-sort-header {
+  background-color: #006891;
+  color: white;
+  width: fit-content;
+  text-align: center;
+
+}
+
+.btn-color {
+  background-color: #006891;
+  border-color: #006891;
+}
+
+.btn-color:hover{
+  background-color: aliceblue;
+  color: #006891;
+
+}
+
+.kyc {
+  cursor: pointer;
+}
+
+.kyc:hover {
+  color: blue;
+  text-decoration: underline;
+}
+
+
+/* .mat-row {
+  height: auto;
+} */
+
+/* .mat-cell {
+  padding-right: 20px;
+  padding-left: 20px;
+} */
+
+.mat-column-Transaction-Date{
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.mat-column-Transaction-Channel{
+  padding-left: 20px;
+}
+
+.mat-column-Reference-No{
+  padding-right: 20px;
+}

@@ -1,0 +1,140 @@
+<mat-dialog-content>
+    <h4 class="font-weight-bold">User Details</h4>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title class="d-flex justify-content-between"> 
+         
+           
+            <!-- <button mat-mini-fab color="white"(click)="edit()"><mat-icon>edit</mat-icon></button> -->
+      
+          
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="register-container">
+      <form [formGroup]="secondFormGroup">  
+        Email
+        <div class="">
+          <mat-form-field class="input_field mr-5">
+            <input type="email" matInput placeholder="Email" [attr.disabled]="disable==true? true : null" formControlName="email"> 
+            <mat-error *ngIf="!secondFormGroup.get('email').valid">
+             Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+    
+        <!-- Username -->
+        <!-- <div class="">
+          <mat-form-field class="input_field mr-5">
+            <input type="text" matInput placeholder="Username" [attr.disabled]="disable==true? true : null" formControlName="userName"> 
+            <mat-error *ngIf="!secondFormGroup.get('firstName').valid">
+              Access Rights is <strong>required</strong>
+            </mat-error>
+       </mat-form-field>
+        </div> -->
+    
+        <!-- First Name -->
+        <div class="">
+          <mat-form-field class="input_field mr-5">
+            <input type="text" matInput placeholder="First Name" [attr.disabled]="disable==true? true : null" formControlName="firstName"> 
+            <mat-error *ngIf="!secondFormGroup.get('firstName').valid">
+              First Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+    
+        <!-- Last Name -->
+       <div class=""> 
+          <mat-form-field class="input_field mr-5">
+            <input type="lastName" matInput placeholder="Last Name" [attr.disabled]="disable==true? true : null"  formControlName="lastName"> 
+            <mat-error *ngIf="!secondFormGroup.get('lastName').valid">
+              Last Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+     
+        <!-- Approval Status -->
+        <div class="">
+          <mat-form-field class="input_field mr-5">
+            <input type="text" matInput placeholder="Approval Status: Y or N" [attr.disabled]="disable==true? true : null"  formControlName="approvalStatus" >
+            <mat-error *ngIf="!secondFormGroup.get('approvalStatus').valid">
+              Approval Status is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        </div> 
+    
+        <!-- Reject Status -->
+    
+        <div class="">
+          <mat-form-field class="input_field mr-5">
+            <input type="text" matInput placeholder="Reject Status: Y or N"  [attr.disabled]="disable==true? true : null" formControlName="rejectStatus">
+            <mat-error *ngIf="!secondFormGroup.get('rejectStatus').valid">
+              Reject Status is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div> 
+
+          <div class="">
+           
+    
+            <mat-form-field class="input_field mr-5">
+              <mat-label>Select Accessible Partners</mat-label>
+              <mat-select formControlName="accessiblePartners">
+                <mat-option 
+                *ngFor="let partner of permission" [value]="partner.value" >
+                 {{partner.name}}
+                 </mat-option>
+              </mat-select>
+              <mat-error *ngIf="!secondFormGroup.get('accessiblePartners').valid">
+                Accessible Partners is <strong>required</strong>
+              </mat-error>
+            
+            </mat-form-field>
+    
+         </div>
+  
+            <div class="">
+             
+      
+              <mat-form-field class="input_field mr-5">
+                <mat-label>Select Role</mat-label>
+                <mat-select formControlName="role">
+                  <mat-option 
+                  *ngFor="let role of rolesList" [value]="role" >
+                   {{role}}
+                   </mat-option>
+                </mat-select>
+                <mat-error *ngIf="!secondFormGroup.get('role').valid">
+                 Role is <strong>required</strong>
+                </mat-error>
+               
+              </mat-form-field>
+      
+           </div>
+      
+            <div class="">
+             
+      
+              <mat-form-field class="input_field mr-5">
+                <mat-label>Select Access Right</mat-label>
+                <mat-select formControlName="accessRight" multiple>
+                  <mat-option *ngFor="let access of accessRightList" [value]="access" required>
+                   {{access}}
+                   </mat-option>
+                </mat-select>
+                <mat-error *ngIf="!secondFormGroup.get('accessRight').valid">
+                  Access Rights is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+      
+           </div>
+      
+        </form>
+      </mat-card-content>
+    </mat-card>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <div>
+        <button mat-button (click)="onNoClick()">No, Thanks</button>
+        <button class="btn btn-primary btn-sm btn-color" [mat-dialog-close]="data" cdkFocusInitial (click)="save()" [disabled]="!secondFormGroup.valid">Save</button>
+      </div>
+     

@@ -1,0 +1,119 @@
+<mat-sidenav-container fullscreen>
+  <!-- opened -->
+  <mat-sidenav class="m-0 p-0 border border-0" mode="side" #sidenav position="start">
+    <ul style="list-style-type: none;" class="m-0 p-0">
+      <li style="height: 60px" class="border-bottom border-white">
+        <img class="m-1" src="../../assets/img/dashheader.svg" alt="">
+
+      </li>
+      <li>
+        <div *ngIf="isEcoBankUser" routerLink="/app/dashboard" class="p-4 d-flex">
+          <mat-icon>home</mat-icon>
+          <p routerLinkActive="dim-color" class="routeLink mx-2 mt-1">DASHBOARD</p>
+        </div>
+        <div *ngIf="!isEcoBankUser" routerLink="/app/home" class="p-4 d-flex">
+          <mat-icon>home</mat-icon>
+          <p routerLinkActive="dim-color" class="routeLink mx-2 mt-1">MONITORING</p>
+        </div>
+      </li>
+      <li>
+        <!-- <div *ngIf="isEcoBankUser">
+          <div class="d-flex justify-content-start">
+            <mat-icon>eco</mat-icon>
+            <p routerLinkActive="dim-color" class="mx-2 mt-1">MONITORING</p>
+          </div>
+          <ul class="px-3 ml-4" style="list-style-type: none;">
+            <p *ngFor="let partner of partners" routerLinkActive="dim-color" class="routeLink"
+              [routerLink]="partner.link">{{ partner.name }}</p>
+          </ul>
+
+        </div> -->
+        <mat-accordion  *ngIf="isEcoBankUser">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-start">
+                  <mat-icon>eco</mat-icon>
+                  <p routerLinkActive="dim-color" class="mx-2 mt-1">MONITORING</p>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul *ngFor="let partner of partners">
+              <p routerLinkActive="dim-color" class="routeLink" [routerLink]="partner.link">{{ partner.name }}</p>
+            </ul>
+
+          </mat-expansion-panel>
+          <mat-expansion-panel   *appNewRole="'Reporting and Monitoring'">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-start">
+                  <mat-icon>local_library</mat-icon>
+                  <p routerLinkActive="dim-color" class="routeLink mx-2 mt-1">REPORT</p>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul class="px-3 ml-4" style="list-style-type: none;">
+              <p routerLinkActive="dim-color" class="routeLink" routerLink="/app/summary">SUMMARY</p>
+              <p routerLinkActive="dim-color" class="routeLink" routerLink="/app/detail"  *appNewRole="'ECO.Admin'">
+                DETAILS</p>
+            </ul>
+
+          </mat-expansion-panel>
+
+        </mat-accordion>
+      </li>
+      <li>
+        <!-- <div *appNewRole="'Reporting and Monitoring'">
+          <div *ngIf="isEcoBankUser" class="px-4 d-flex justify-content-start">
+            <mat-icon>local_library</mat-icon>
+            <p routerLinkActive="dim-color" class="routeLink mx-2 mt-1">REPORT</p>
+          </div>
+          <ul *ngIf="isEcoBankUser" class="px-3 ml-4" style="list-style-type: none;">
+            <p routerLinkActive="dim-color" class="routeLink ml-4" routerLink="/app/summary">SUMMARY</p>
+            <p routerLinkActive="dim-color" class="routeLink ml-4" routerLink="/app/detail" *appNewRole="'ECO.Admin'">
+              DETAILS</p>
+          </ul>
+        </div> -->
+        <div *ngIf="!isEcoBankUser">
+          <div *appNewRole="'Reporting and Monitoring'" class="px-4 d-flex justify-content-start "
+            routerLink="/app/summary">
+            <mat-icon>local_library</mat-icon>
+            <p routerLinkActive="dim-color" class="routeLink mx-2 mt-1">REPORT</p>
+          </div>
+        </div>
+
+      </li>
+      <li>
+        <div style="position: absolute;bottom: 0;" routerLink="/app/users" class="px-4 d-flex align-items-center"
+          *appNewRole="'NIBSS.Admin,EQUITY.Admin,ALIP.Admin,ECO.Admin'">
+          <mat-icon>person</mat-icon>
+          <p routerLinkActive="dim-color" class="routeLink mx-2 mt-3">USER MANAGEMENT</p>
+        </div>
+      </li>
+    </ul>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar class="d-flex justify-content-between" color="#fff">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <img width="70px" src="../../assets/img/ecologo.png" alt="ecobank logo">
+      <div class="user-container d-flex justify-content-center align-items-center">
+        <button mat-button [matMenuTriggerFor]="menu">
+          {{userFullName}}
+          <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+        <mat-icon>face</mat-icon>
+        <mat-menu #menu="matMenu">
+          <button (click)="handlePasswordReset()" mat-menu-item
+            *appNewRole="'NIBSS.Admin,EQUITY.Admin,ALIP.Admin,NIBSS.User,EQUITY.User,ALIP.user'">Reset Password</button>
+          <button (click)="handleLogout()" mat-menu-item>Logout</button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+    <div class="main-content">
+      <router-outlet> </router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Hi, {{data.firstName}}</h1>
+<div mat-dialog-content>
+  <p>Are you sure you want reject this user?</p>
+  <form [formGroup]="firstFormGroup">
+  <mat-form-field>
+    <mat-label>Remark</mat-label>
+    <!-- <input type="textarea" matInput placeholder="Remark" formControlName="remark"> -->
+    <textarea matInput placeholder="Remark" formControlName="remark"></textarea>
+  </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No, Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial (click)="rejectUser()">Yes</button>
+</div>

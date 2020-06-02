@@ -1,0 +1,30 @@
+.mat-form-field {
+    width: 90px;
+}
+.productType .mat-form-field {
+    width: 40%;
+}
+
+.legendCircle {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.success {
+    background-color: #1cff1f;
+}
+
+.failed {
+    background-color: #ff4c00;
+
+}
+
+.pending {
+    background-color: #f0e00b;
+}
+
+.titleText {
+    font-size: 18px;
+}

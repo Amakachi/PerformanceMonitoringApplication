@@ -1,0 +1,85 @@
+<h2 mat-dialog-title>Sender Details</h2>
+<mat-dialog-content>
+  <div class="container" [ngClass]="{'justify-content-center' : !this.isData}">
+    <div *ngIf="this.isData; else noDataFound" class="row flex-fill flex-column">
+      <div>
+        <h5 class="font-weight-bold">Sender ID</h5>
+        <p>{{senderKycDetails.senderId}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- UserId -->
+      <div>
+        <h5 class="font-weight-bold">First Name</h5>
+        <p>{{senderKycDetails.firstName}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- External Reference -->
+      <div>
+        <h5 class="font-weight-bold">Last Name</h5>
+        <p>{{senderKycDetails.lastName}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Gender</h5>
+        <p>{{senderKycDetails.gender}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Email Address</h5>
+        <p>{{senderKycDetails.emailAddress}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Mobile Number</h5>
+        <p>{{senderKycDetails.mobilePhone}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Affiliate</h5>
+        <p>{{senderKycDetails.affiliate}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Branch Code</h5>
+        <p>{{senderKycDetails.branchCode}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Customer Type</h5>
+        <p>{{senderKycDetails.customerType}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Contact Address</h5>
+        <p>{{senderKycDetails.contactAddress}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">DOB</h5>
+        <p>{{senderKycDetails.dateOfBirth}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Nationality</h5>
+        <p>{{senderKycDetails.nationality}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Country</h5>
+        <p>{{senderKycDetails.country}}</p>
+      </div>
+    </div>
+    <ng-template #noDataFound>
+      <div class="mt-4"
+        style="font-weight: bold; font-family: Roboto,serif; font-size: 20px;">
+        {{noData}}
+      </div>
+    </ng-template>
+  </div>
+</mat-dialog-content>
+<div class="mat-dialog-actions">
+  <button class="btn btn-primary btn-sm btn-color" (click)="close()">Close</button>
+</div>
+
+
+

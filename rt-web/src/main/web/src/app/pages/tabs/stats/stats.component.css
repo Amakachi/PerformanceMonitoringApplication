@@ -1,0 +1,43 @@
+
+.mat-header-cell {
+  flex-direction: column ;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  color: #006891;
+  font-size: 15px;
+}
+.statCal {
+  max-width: 500px;
+}
+
+
+.mat-cell {
+  text-align: center;
+  justify-content: center;
+
+}
+
+.button{
+  margin-bottom: 1.5rem;
+  margin-right: 5rem;
+}
+
+
+.pull-right {
+  float: right;
+}
+
+table {
+  width: 100%;
+}
+
+.dropdowns .mat-form-field {
+  width: 100%;
+  max-width: 120px;
+}
+
+.btn-color {
+  background-color: #006891;
+  border-color: #006891;
+}

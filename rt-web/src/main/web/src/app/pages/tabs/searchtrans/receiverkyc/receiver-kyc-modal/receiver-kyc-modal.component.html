@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>Receiver Details</h2>
+<mat-dialog-content>
+  <div class="container" [ngClass]="{'justify-content-center' : !this.isData}">
+    <div *ngIf="this.isData; else noDataFound" class="row flex-fill flex-column">
+      <!-- UserId -->
+      <div>
+        <h5 class="font-weight-bold">Receiver ID</h5>
+        <p>{{receiverKycDetails.receiverId}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- External Reference -->
+      <div>
+        <h5 class="font-weight-bold">Customer ID</h5>
+        <p>{{receiverKycDetails.customerId}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">First Name</h5>
+        <p>{{receiverKycDetails.firstName}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Last Name</h5>
+        <p>{{receiverKycDetails.lastName}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Identification Type</h5>
+        <p>{{receiverKycDetails.identificationType}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Identification Number</h5>
+        <p>{{receiverKycDetails.identificationNumber}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Phone Number</h5>
+        <p>{{receiverKycDetails.phoneNumber}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Email Address</h5>
+        <p>{{receiverKycDetails.emailAddress}}</p>
+      </div>
+    </div>
+    <ng-template #noDataFound>
+      <div class="mt-4"
+        style="font-weight: bold; font-family: Roboto,serif; font-size: 20px;">
+        {{noData}}
+      </div>
+    </ng-template>
+  </div>
+</mat-dialog-content>
+<div class="mat-dialog-actions">
+  <button class="btn btn-primary btn-sm btn-color" (click)="close()">Close</button>
+</div>

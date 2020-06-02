@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+
+// @import "~bootstrap/dist/css/bootstrap.min.css";
+// @import "~animate.css";
+
+html, body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    min-width: 1000px;
+}
+
+.mat-tab-body-content {
+    overflow: hidden !important;
+}
+
+.mousehover{
+    cursor: pointer;
+  }
+
+  .mousehover:hover {
+    color: #0000EE;
+}

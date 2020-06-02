@@ -1,0 +1,12 @@
+<h1>Monitoring</h1>
+<div>
+  <nav mat-tab-nav-bar>
+    <ng-container *ngFor="let link of navLinks">
+      <a mat-tab-link [routerLink]="link.path" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+        <mat-icon class="mx-2">{{ link.icon }}</mat-icon>{{ link.label }}
+      </a>
+    </ng-container>
+  </nav>
+  <router-outlet></router-outlet>
+</div>
+

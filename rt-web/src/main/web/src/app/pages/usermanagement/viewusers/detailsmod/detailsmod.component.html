@@ -1,0 +1,56 @@
+
+<h2 mat-dialog-title>User Details</h2>
+<mat-dialog-content>
+
+  <div class="container">
+    <div class="row flex-fill flex-column">
+
+        <div>
+          <h5 class="font-weight-bold mr-2" >Email</h5>
+            <p>{{this.userDetails.email}}</p>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div>
+          <h5 class="font-weight-bold mr-2" >First Name</h5>
+      <p>{{this.userDetails.firstName}}</p>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div>
+          <h5 class="font-weight-bold mr-2" >Last Name</h5>
+      <p>{{this.userDetails.lastName}}</p>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div>
+            <h5 class="font-weight-bold mr-2" >Approval Status</h5>
+        <p>{{this.userDetails.approvalStatus == 'Y' || this.userDetails.approvalStatus == 'y' ? 'approved' : 'pending'}}</p>
+          </div>
+          <mat-divider></mat-divider>
+
+          <div>
+            <h5 class="font-weight-bold mr-2" >Role</h5>
+        <p>{{this.userDetails.roles[0].roleName}}</p>
+          </div>
+          <mat-divider></mat-divider>
+
+          <div>
+            <h5 class="font-weight-bold mr-2" >Remark</h5>
+        <p>{{this.userDetails.remark}}</p>
+          </div>
+          <mat-divider></mat-divider>
+<!-- 
+        <div>
+          <h5 class="font-weight-bold mr-2" >User Name</h5>
+      <p>{{this.userDetails.userName}}</p>
+        </div>
+     -->
+
+    </div>
+
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="btn btn-primary btn-sm btn-color" (click)="close()">Close</button>

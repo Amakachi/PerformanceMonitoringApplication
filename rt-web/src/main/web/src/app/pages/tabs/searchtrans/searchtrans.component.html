@@ -1,0 +1,232 @@
+<div class="container-fluid mt-4">
+  <form [formGroup]="searchForm" (ngSubmit)="search()">
+    <div class="row">
+      <div class="col-3">
+        <mat-form-field class="form-field-w100">
+          <mat-label>Transaction Category</mat-label>
+          <mat-select formControlName="sendOrReceive">
+            <mat-option *ngFor="let type of transactionTypes" [value]="type.value">
+              {{type.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngIf="userCompany == 'ECOBANK'" class="col-3">
+        <mat-form-field class="form-field-w100">
+          <mat-label>Transaction Channel</mat-label>
+          <mat-select formControlName="transactionChannel">
+            <mat-option *ngFor="let channel of transactionChannels" [value]="channel.value">
+              {{channel.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mt-3 mb-3">
+      <div class="col-3">
+        <mat-form-field class="form-field-w100">
+          <mat-label>Search by sender ID</mat-label>
+          <input formControlName="senderId" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-3">
+        <mat-form-field class="form-field-w100">
+          <mat-label>Search by reference no</mat-label>
+          <input formControlName="referenceNo" matInput>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-8">
+        <mat-card>
+          <div class="row">
+            <div class="col-4">
+              <mat-form-field class="form-field-w100">
+                <mat-label>Transaction Status</mat-label>
+                <mat-select formControlName="transactionStatus">
+                  <mat-option *ngFor="let status of transactionStatus_" [value]="status.value">
+                    {{status.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="form-field-w100">
+                <mat-label>Records</mat-label>
+                <mat-select formControlName="recordLimit" required>
+                  <mat-option *ngFor="let limit of recordLimits" [value]="limit.value">
+                    {{limit.item}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-8">
+              <mat-card>
+                <mat-tab-group (selectedTabChange)="trackCurrentTab($event)" [selectedIndex]="activeTab">
+                  <!-- Daily Tab -->
+                  <mat-tab label="Daily">
+                    <mat-form-field>
+                      <mat-label>Choose a date</mat-label>
+                      <input formControlName="daily" [max]="maxDate" matInput [matDatepicker]="picker1" required>
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                      <mat-error *ngIf="searchForm.get('daily').hasError('matDatepickerParse')">
+                        "{{searchForm.get('daily').getError('matDatepickerParse').text}}" is not a valid date!</mat-error>
+                      <mat-error *ngIf="searchForm.get('daily').hasError('matDatepickerMax')">Maximum date should be {{maxDate}}
+                      </mat-error>
+                    </mat-form-field>
+                  </mat-tab>
+                  <!-- Custom Date Tab -->
+                  <mat-tab label="Custom" class="row">
+                    <mat-form-field class="col-5">
+                      <mat-label>Start Date</mat-label>
+                      <input formControlName="startDate" [max]="maxDate" matInput [matDatepicker]="picker2" required>
+                      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                      <mat-error *ngIf="searchForm.get('startDate').hasError('matDatepickerParse')">
+                        "{{searchForm.get('startDate').getError('matDatepickerParse').text}}" is not a valid date!</mat-error>
+                      <mat-error *ngIf="searchForm.get('startDate').hasError('matDatepickerMax')">Maximum date should be {{maxDate}}
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-5">
+                      <mat-label>End Date</mat-label>
+                      <input formControlName="endDate" [max]="maxDate" matInput [matDatepicker]="picker3" required>
+                      <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                      <mat-datepicker #picker3></mat-datepicker>
+                      <mat-error *ngIf="searchForm.get('endDate').hasError('matDatepickerParse')">
+                        "{{searchForm.get('endDate').getError('matDatepickerParse').text}}" is not a valid date!</mat-error>
+                      <mat-error *ngIf="searchForm.get('endDate').hasError('matDatepickerMax')">Maximum date should be {{maxDate}}
+                      </mat-error>
+                    </mat-form-field>
+                  </mat-tab>
+                </mat-tab-group>
+                <div class="d-flex justify-content-end">
+                  <button class="btn btn-primary btn-sm btn-color rounded" type="submit"
+                    [disabled]="searchForm.invalid">Search</button>
+                </div>
+              </mat-card>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </form>
+  <app-mat-spinner-overlay *ngIf="showSpinner" overlay="{{overlay}}"></app-mat-spinner-overlay>
+  <div *ngIf="!tableDataLoaded" class="d-flex justify-content-center mt-5"
+    style="font-weight: bold; font-family: Roboto,serif; font-size: 20px;">
+    {{nodata}}
+  </div>
+
+  <div class="row">
+    <!-- Table is to be here -->
+    <div [ngStyle]="{'display': tableDataLoaded ? 'block' : 'none' }" class="table-container mat-elevation-z8">
+      <div class="row m-2">
+        <div *ngIf="!isExcelExportingInProgress" class="">
+          <img class="mousehover" width="40px" src="/assets/img/excel.svg" alt="excel downloader"
+            (click)="exportAsExcel()">
+        </div>
+        <div *ngIf="isExcelExportingInProgress" class="">
+          <mat-spinner diameter="20"></mat-spinner>
+        </div>
+        <div class="col mt-2"> Export Detailed Report </div>
+      </div>
+      <table mat-table [dataSource]="dataSource" class="searchTable">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="Serial">
+          <th mat-header-cell *matHeaderCellDef>S/N</th>
+          <td mat-cell *matCellDef="let element"> {{element.serial}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="Transaction Id">
+          <th mat-header-cell *matHeaderCellDef>Transaction Id</th>
+          <td mat-cell *matCellDef="let element"> {{element.transactionId}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="Sender Id">
+          <th mat-header-cell *matHeaderCellDef>Sender Id</th>
+          <td (click)="getSenderKyc(element.senderId)" class="kyc" mat-cell *matCellDef="let element">
+            {{element.senderId}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="Receiver Id">
+          <th mat-header-cell *matHeaderCellDef>Receiver Id</th>
+          <td (click)="getReceiverKyc(element.receiverId)" class="kyc" mat-cell *matCellDef="let element">
+            {{element.receiverId}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="Reference No">
+          <th mat-header-cell *matHeaderCellDef>Reference No</th>
+          <td mat-cell *matCellDef="let element">
+            {{element.referenceNo}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="Transaction Date">
+          <th mat-header-cell *matHeaderCellDef>Transaction Date</th>
+          <td mat-cell *matCellDef="let element" style="width:1%;
+          white-space:nowrap; padding-left: 3px;"> {{element.transactionDate}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="Transaction Channel">
+          <th mat-header-cell *matHeaderCellDef>Transaction Channel</th>
+          <td mat-cell *matCellDef="let element"> {{element.transactionChannel}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="Receive Channel">
+          <th mat-header-cell *matHeaderCellDef>Receive Channel</th>
+          <td mat-cell *matCellDef="let element"> {{element.receiveChannel}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="Amount">
+          <th mat-header-cell *matHeaderCellDef>Amount</th>
+          <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Source Affiliate">
+          <th mat-header-cell *matHeaderCellDef> Source Affiliate </th>
+          <td mat-cell *matCellDef="let element"> {{element.sourceAffiliate}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Destination Affiliate">
+          <th mat-header-cell *matHeaderCellDef> Destination Affiliate </th>
+          <td mat-cell *matCellDef="let element"> {{element.destinationAffiliate}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Transaction Status">
+          <th mat-header-cell *matHeaderCellDef> Transaction Status </th>
+          <td mat-cell *matCellDef="let element" [ngStyle]="{'color': element.transactionStatus === 'SUCCESSFUL' ? '#0b9730' : 
+                          element.transactionStatus === 'PENDING' ? '#f0e00b' : '#ff4c00'}">
+            {{element.transactionStatus}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Response Message">
+          <th mat-header-cell *matHeaderCellDef> Response Message </th>
+          <td mat-cell *matCellDef="let element"> {{element.responseMessage}} </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="Action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let element"> <button class="btn btn-sm btn-primary btn-color"
+              (click)="openDialog(element.transactionId)">Details</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+    </div>
+
+  </div>
+</div>

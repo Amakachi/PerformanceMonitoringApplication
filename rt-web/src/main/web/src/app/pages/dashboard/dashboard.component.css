@@ -1,0 +1,41 @@
+.text-small {
+    font-size: 10px;
+}
+
+.success-color {
+    color: #1cff1f;
+}
+.new-color:hover{
+  color: #0000EE;
+  cursor: pointer;
+}
+
+
+.pending-color {
+    color: #d1d40e;
+}
+
+.failed-color {
+    color: #ff2100;
+}
+
+#dashboard {
+overflow-x: hidden;
+}
+.mat-form-field {
+    width: 150px;
+    margin-left: 15px;
+}
+
+mat-list-item p {
+    font-size: 13px;
+}
+
+.mousepointer {
+    cursor: pointer;
+  
+}
+.mousepointer:hover {
+    color: #0000EE;
+}
+

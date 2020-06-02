@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Hi, {{data.firstName}}</h1>
+<div mat-dialog-content>
+  <p>Are you sure you want approve this user?</p>
+  <mat-form-field>    
+  <mat-label>Rejection Remark</mat-label>
+    <textarea matInput  [(ngModel)] = "this.remark" [disabled]="disableField" *ngIf="!data.doneAction"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No, Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial (click)="approveUser()">Yes</button>
+</div>

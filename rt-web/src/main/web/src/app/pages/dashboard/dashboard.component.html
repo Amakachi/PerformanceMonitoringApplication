@@ -1,0 +1,161 @@
+<div class="row justify-content-between mt-2">
+  <h1 *ngIf="!isEcoBankUser"></h1>
+  <h1 *ngIf="isEcoBankUser">Dashboard</h1>
+  <div class="col-md-3 d-flex justify-content-end">
+    <h4 class="mr-3">Send</h4>
+    <mat-slide-toggle color="primary" (change)="toggleDashTransactionCategory($event)"></mat-slide-toggle>
+    <h4 class="ml-3">Receive</h4>
+  </div>
+</div>
+<div>
+  <div id="dashboard" class="mt-3">
+    <div class="row">
+      <div class="col-4" *ngFor="let item of dashboardTabs">
+        <div id="dashboardTab" class="card border-0 p-3">
+          <p
+            [className]="item.type === 'successful' ? 'success-color font-weight-bold' : item.type === 'pending' ? 'pending-color font-weight-bold' : 'failed-color font-weight-bold'">
+            {{item.title}}</p>
+          <div class="d-flex justify-content-between">
+            <div  (click)="dashboardTopBarSearchLink(item)" [class]="isEcoBankUser ? 'm-0 p-0' : 'm-0 p-0 mousepointer' ">
+              <h3  class="font-weight-bolder p-0 m-0">{{item.count}}</h3>
+              <p
+                [className]="item.type === 'successful' ? 'success-color m-0 p-0 ' : item.type === 'pending' ? 'pending-color m-0 p-0' : 'failed-color m-0 p-0'"
+                >
+                {{item.percent== null ? 0 : item.percent}}%</p>
+            </div>
+            <img [src]="item.image" width="100px" alt="flow representation">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div  [class]="isEcoBankUser ? 'col-8' : 'col-12'">
+        <div class="card">
+          <div class="mt-3 d-flex justify-content-between px-5">
+            <h3>{{chartTextTitle}}</h3>
+            <!-- appearance="outline" -->
+
+            <div class="d-flex">
+              <mat-form-field *ngIf="!lineChartLoading">
+                <mat-label>Choose Date Grouping</mat-label>
+                <mat-select (selectionChange)="handleLineGraphTime($event)" value="monthly">
+                  <mat-option value="daily">
+                    This Day
+                  </mat-option>
+                  <mat-option value="monthly">
+                    This Month
+                  </mat-option>
+                  <mat-option value="yearly">
+                    This Year
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div *ngIf="lineChartLoading">
+                <mat-spinner diameter="20"></mat-spinner>
+              </div>
+
+              <mat-form-field>
+                <mat-label>Choose transaction category</mat-label>
+                <mat-select [disabled]="lineChartLoading" (selectionChange)="handleVolVal($event)" [value]="volumeValueData">
+                  <mat-option value="volume">
+                    Volume
+                  </mat-option>
+                  <mat-option value="value">
+                    Value
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+
+
+
+          </div>
+          <!-- Chart is displayed here -->
+          <div *ngIf="!displayChart" class="d-flex justify-content-center mt-3 mb-4"
+            style="font-weight: bold; font-family: Roboto,serif; font-size: 20px;">
+            {{nodata}}
+          </div>
+          <div *ngIf="displayChart">
+            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+              [colors]="lineChartColors" [legend]="true" [chartType]="lineChartType"></canvas>
+          </div>
+
+        </div>
+      </div>
+
+      <div *ngIf="isEcoBankUser" class="col-4">
+
+        <div class="card mb-3">
+          <mat-list>
+            <mat-list-item>
+              <div class="w-100 d-flex justify-content-between">
+                <p class = "font-weight-bold">Successful Transactions Per Partner</p>
+                <p class = "font-weight-bold" >Count ( Amount )</p>
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <div *ngFor="let successfulItem of successfulTransaction">
+              <div class="d-flex justify-content-between px-3 pt-3"  >
+                <p class = "font-italic" >{{successfulItem.partner}}</p>
+                <p class = "success-color new-color" (click)="dashboardSidePartnerBarSearchLink(successfulItem, 'successful')">{{successfulItem.count}} ({{successfulItem.amount}} )</p>
+              </div>
+              <mat-divider></mat-divider>
+            </div>
+            <div class="p-3 text-center font-weight-bold" *ngIf="successfulTransaction.length == 0">No data</div>
+
+          </mat-list>
+
+        </div>
+
+
+        <div class="card mb-3">
+          <mat-list>
+            <mat-list-item>
+              <div class="w-100 d-flex justify-content-between">
+                <p class = "font-weight-bold">Pending Transactions Per Partner</p>
+                <p class = "font-weight-bold">Count ( Amount )</p>
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <div *ngFor="let pendingItem of pendingTransaction">
+              <div class="d-flex justify-content-between px-3 pt-3">
+                <p class = "font-italic">{{pendingItem.partner}}</p>
+                <p (click)="dashboardSidePartnerBarSearchLink(pendingItem, 'pending')" class = "pending-color new-color">{{pendingItem.count}} ({{pendingItem.amount}} )</p>
+              </div>
+              <mat-divider></mat-divider>
+            </div>
+            <div class="p-3 text-center font-weight-bold" *ngIf="pendingTransaction.length == 0">No data</div>
+
+          </mat-list>
+        </div>
+
+        <div class="card">
+          <mat-list>
+            <mat-list-item>
+              <div class="w-100 d-flex justify-content-between">
+                <p class = "font-weight-bold">Failed Transactions Per Partner</p>
+                <p class="font-weight-bold">Count ( Amount )</p>
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <div *ngFor="let failedItem of failedTransaction">
+              <div class="d-flex justify-content-between px-3 pt-3">
+                <p class = "font-italic">{{failedItem.partner}}</p>
+                <p  (click)="dashboardSidePartnerBarSearchLink(failedItem, 'failed')" class = "failed-color new-color">{{failedItem.count}} ({{failedItem.amount}} )</p>
+              </div>
+              <mat-divider></mat-divider>
+            </div>
+            <div class="p-3 text-center font-weight-bold" *ngIf="failedTransaction.length == 0">No data</div>
+          </mat-list>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+  <app-mat-spinner-overlay *ngIf="showSpinner" overlay="{{overlay}}"></app-mat-spinner-overlay>
+
+
+</div>

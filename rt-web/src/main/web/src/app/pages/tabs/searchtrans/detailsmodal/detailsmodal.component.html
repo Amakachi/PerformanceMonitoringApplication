@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>Transaction Details</h2>
+<mat-dialog-content>
+  <div class="container">
+    <div class="row flex-fill flex-column">
+      <!-- UserId -->
+      <div>
+        <h5 class="font-weight-bold">Transaction ID</h5>
+        <p>{{transDetails.tranId}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- External Reference -->
+      <div>
+        <h5 class="font-weight-bold">External Reference</h5>
+        <p>{{transDetails.externalRef}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Source Affiliate</h5>
+        <p>{{transDetails.sourceAffiliate}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Send Amount</h5>
+        <p>{{transDetails.sendAmount}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Source Currency</h5>
+        <p>{{transDetails.sourceCurrency}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Received Amount</h5>
+        <p>{{transDetails.receiveAmount}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Destination Currency</h5>
+        <p>{{transDetails.destinationCurrency}}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <h5 class="font-weight-bold">Received Date</h5>
+        <p>{{transDetails.receiveDate}}</p>
+      </div>
+      <mat-divider></mat-divider>  
+      <div>
+        <h5 class="font-weight-bold">Queue State</h5>
+        <p>{{transDetails.queueState}}</p>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<div class="mat-dialog-actions">
+  <button class="btn btn-primary btn-sm btn-color" (click)="close()">Close</button>
+</div>
